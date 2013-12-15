@@ -1,6 +1,6 @@
-package com.efrain.agenda.modelos;
+package model;
 
-public class Contacto {
+public class Cliente {
 	
 	private String nombre;
 	private String apellido;
@@ -9,12 +9,12 @@ public class Contacto {
 	private String ciudad;
 	
 	
-	public Contacto () {
+	public Cliente () {
 		//por convencao
 	}
 	
 	
-	public Contacto(String nombre, String apellido, String edad,
+	public Cliente(String nombre, String apellido, String edad,
 			String telefono, String ciudad) {
 		this.nombre = nombre;
 		this.apellido = apellido;
