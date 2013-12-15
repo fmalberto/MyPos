@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE project>
+	<project name="MyPos" default="deploy" basedir=".">
+
+  <!-- Configure the directory into which the web application is built -->
+  <property name="build"    value="${basedir}/build"/>
+  <property name="warfile"  value="${basedir}/build"/>
+
+  <!-- Configure the context path for this application -->
+  <property name="path"     value="/MyPos"/>
+
+  <!-- Configure properties to access the Manager application -->
+  <property name="url"      value="http://192.168.56.10:8080/manager"/>
+  <property name="username" value="cs"/>
+  <property name="password" value="cs"/>
+
+  <!-- Configure the custom Ant tasks for the Manager application -->
+  <taskdef name="deploy"    classname="org.apache.catalina.ant.DeployTask"/>
+  <taskdef name="reload"    classname="org.apache.catalina.ant.ReloadTask"/> 
+  <taskdef name="start"     classname="org.apache.catalina.ant.StartTask"/>
+  <taskdef name="stop"      classname="org.apache.catalina.ant.StopTask"/>
+  <taskdef name="undeploy"  classname="org.apache.catalina.ant.UndeployTask"/>
+
+  <!-- Executable Targets -->
+  <target name="compile" description="Compile web application">
+	<war destfile="${build}/${ant.project.name}.war" webxml="WebContent/WEB-INF/web.xml" update="true">
+	<classes dir="build/classes"/>
+	<fileset dir="WebContent">
+	</fileset>
+	</war>
+  </target>
+
+  <target name="deploy" description="Install/update web application"
+          depends="compile">
+    <deploy url="${url}" username="${username}" password="${password}"
+            path="${path}" update="true" war="file:${build}${path}.war"/>
+  </target>
+
+  <target name="reload" description="Reload web application"
+          depends="compile">
+    <reload  url="${url}" username="${username}" password="${password}"
+            path="${path}"/>
+  </target>
+
+  <target name="undeploy" description="Remove web application">
+    <undeploy url="${url}" username="${username}" password="${password}"
+            path="${path}"/>
+  </target>
+
+</project>
